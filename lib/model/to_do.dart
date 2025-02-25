@@ -16,8 +16,8 @@ class ToDo {
       ToDo(id: "05", todoText: " meeting"),
       ToDo(id: "06", todoText: "familly time"),
       ToDo(id: "07", todoText: " study"),
-      ToDo(id: "07", todoText: " sleeping"),
-      ToDo(id: "07", todoText: " Instagram"),
+      ToDo(id: "08", todoText: " sleeping"),
+      ToDo(id: "09", todoText: " Instagram"),
     ];
   }
 }
