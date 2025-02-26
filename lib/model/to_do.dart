@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class ToDo {
-  String? id;
+  String id;
   String? todoText;
   bool isDone;
 
@@ -17,7 +17,6 @@ class ToDo {
       ToDo(id: "06", todoText: "familly time"),
       ToDo(id: "07", todoText: " study"),
       ToDo(id: "08", todoText: " sleeping"),
-      ToDo(id: "09", todoText: " Instagram"),
     ];
   }
 }

@@ -4,6 +4,7 @@ import 'package:to_do_app/to_do_items.dart';
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({super.key});
+
   final todosList = ToDo.todoList();
 
   @override
@@ -11,8 +12,19 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  List<ToDo> todosList = ToDo.todoList();
+
+  List<ToDo> _foundTodo = [];
+  @override
+  void initState() {
+    _foundTodo = todosList;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
+    final _todoController = TextEditingController();
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.pink[50],
@@ -79,7 +91,12 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                       ),
-                      for (ToDo todo in widget.todosList) ToDoItems(todo: todo),
+                      for (ToDo todo in todosList)
+                        ToDoItems(
+                          todo: todo,
+                          onTodoChanged: _handleToDoChange,
+                          onDeleteItem: _deleteTodoItem,
+                        ),
                     ],
                   ),
                 ),
@@ -107,6 +124,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: TextField(
+                      controller: _todoController,
                       decoration: InputDecoration(
                         hintText: "Add new todo",
                         border: InputBorder.none,
@@ -118,7 +136,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   margin: EdgeInsets.only(right: 20, bottom: 20),
                   child: ElevatedButton(
                     child: Text("+", style: TextStyle(fontSize: 30)),
-                    onPressed: () {},
+                    onPressed: () {
+                      _addToDoItem(_todoController.text);
+                    },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.blue,
                       minimumSize: Size(50, 50),
@@ -133,12 +153,38 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
+
+  void _handleToDoChange(ToDo todo) {
+    setState(() {
+      todo.isDone = !todo.isDone;
+    });
+  }
+
+  void _deleteTodoItem(String id) {
+    setState(() {
+      todosList.removeWhere((item) => item.id == id);
+    });
+  }
+
+  void _addToDoItem(String Todo) {
+    setState(() {
+      todosList.add(
+        ToDo(
+          id: DateTime.now().millisecondsSinceEpoch.toString(),
+          todoText: Todo,
+        ),
+      );
+    });
+
+    var _todoController;
+    _todoController.clear();
+  }
 }
 
 // void _handleToDoChange(ToDo todo) {
 //   setState(() {
 //     todo.isDone = !todo.isDone;
-//   });
+//   });  
 // }
  
 // child: ClipRect(

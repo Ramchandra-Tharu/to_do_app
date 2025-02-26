@@ -3,14 +3,23 @@ import 'package:to_do_app/model/to_do.dart';
 
 class ToDoItems extends StatelessWidget {
   final ToDo todo;
-  const ToDoItems({super.key, required this.todo});
+  final onTodoChanged;
+  final onDeleteItem;
+  const ToDoItems({
+    super.key,
+    required this.todo,
+    required this.onTodoChanged,
+    required this.onDeleteItem,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(vertical: 10),
       child: ListTile(
-        onTap: () {},
+        onTap: () {
+          onTodoChanged(todo);
+        },
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         tileColor: Colors.white,
         leading: Icon(
@@ -38,7 +47,8 @@ class ToDoItems extends StatelessWidget {
               iconSize: 15,
               icon: Icon(Icons.delete),
               onPressed: () {
-                print("deleted");
+                onDeleteItem(todo.id);
+                // onDeleteItem(todo.id);
               },
             ),
           ),
