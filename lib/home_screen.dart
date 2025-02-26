@@ -35,10 +35,14 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               Icon(Icons.menu, color: Colors.black54, size: 30),
               Container(
-                child: CircleAvatar(
-                  backgroundColor: Colors.lightBlue,
-                  child: Icon(Icons.person, size: 20, color: Colors.white),
+                height: 40,
+                width: 30,
+
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(20),
+                  child: Image.network("https://i.imgur.com/nIJvcWo.jpeg"),
                 ),
+
                 //
               ),
             ],
@@ -203,13 +207,3 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 }
-
-// void _handleToDoChange(ToDo todo) {
-//   setState(() {
-//     todo.isDone = !todo.isDone;
-//   });  
-// }
- 
-// child: ClipRect(
-//               //   child: Image.network("assets/image/my_pp_size_ photo.jpg"),
-//               // ),
