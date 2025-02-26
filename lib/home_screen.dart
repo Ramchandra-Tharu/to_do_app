@@ -60,6 +60,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: TextField(
+                    onChanged: (value) => _runFilter(value),
                     decoration: InputDecoration(
                       contentPadding: EdgeInsets.all(0),
                       prefixIcon: Icon(
@@ -78,26 +79,29 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 Expanded(
-                  child: ListView(
-                    children: [
-                      Container(
-                        margin: EdgeInsets.only(top: 50),
-                        child: Text(
-                          "To Do list",
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 25,
-                            fontWeight: FontWeight.bold,
+                  child: Padding(
+                    padding: EdgeInsets.only(bottom: 50),
+                    child: ListView(
+                      children: [
+                        Container(
+                          margin: EdgeInsets.only(top: 20),
+                          child: Text(
+                            "To Do list",
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 25,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
-                      ),
-                      for (ToDo todo in todosList)
-                        ToDoItems(
-                          todo: todo,
-                          onTodoChanged: _handleToDoChange,
-                          onDeleteItem: _deleteTodoItem,
-                        ),
-                    ],
+                        for (ToDo todo in _foundTodo.reversed)
+                          ToDoItems(
+                            todo: todo,
+                            onTodoChanged: _handleToDoChange,
+                            onDeleteItem: _deleteTodoItem,
+                          ),
+                      ],
+                    ),
                   ),
                 ),
               ],
@@ -178,6 +182,25 @@ class _HomeScreenState extends State<HomeScreen> {
 
     var _todoController;
     _todoController.clear();
+  }
+
+  void _runFilter(String enteredKeyword) {
+    List<ToDo> result = [];
+    if (enteredKeyword.isEmpty) {
+      result = todosList;
+    } else {
+      result =
+          todosList
+              .where(
+                (item) => item.todoText!.toLowerCase().contains(
+                  enteredKeyword.toLowerCase(),
+                ),
+              )
+              .toList();
+    }
+    setState(() {
+      _foundTodo = result;
+    });
   }
 }
 
